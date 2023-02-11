@@ -24,7 +24,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: kmrootkmrootliu
+          username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build backend and push
         uses: docker/build-push-action@v3
@@ -32,14 +32,14 @@ jobs:
           context: backend
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: kmrootkmrootliu/backend:${{ steps.vars.outputs.sha_short }}
+          tags: ${{ env.DOCKERHUB_USERNAME }}/backend:${{ steps.vars.outputs.sha_short }}
       - name: Build frontend and push
         uses: docker/build-push-action@v3
         with:
           context: frontend
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: kmrootkmrootliu/frontend:${{ steps.vars.outputs.sha_short }}
+          tags: ${{ env.DOCKERHUB_USERNAME }}/frontend:${{ steps.vars.outputs.sha_short }}
       # - name: Update helm values.yaml
       #   uses: fjogeleit/yaml-update-action@main
       #   with:
